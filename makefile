@@ -17,7 +17,7 @@ CFLAGS := -ffreestanding -m64 -mno-red-zone \
 
 CFLAGS += $(USER_CFLAGS)
 
-LDFLAGS := -nostdlib -static -Wl,--gc-sections
+LDFLAGS := -nostdlib -static -Wl,--gc-sections -T linker.ld
 SRC := $(shell find src -type f -name '*.c')
 
 .PHONY: all clean
@@ -29,7 +29,7 @@ $(ELF): $(SRC) linker.ld
 	$(CC) $(CFLAGS) $(LDFLAGS) $(SRC) -o $@
 
 $(BIN): $(ELF)
-	$(OBJCOPY) -O binary $< $@
+	$(OBJCOPY) -O binary --set-section-flags .bss=alloc,load,contents $< $@
 
 clean:
 	rm -rf $(BUILD)
