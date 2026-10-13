@@ -1,7 +1,7 @@
 #ifndef NYVD_H
 #define NYVD_H
 
-#define GET_PID 0
+#define GET_TID 0
 #define REGISTER_SERVICE 1
 #define LOOKUP_SERVICE 2
 
@@ -36,6 +36,6 @@ typedef struct uproc_table {
 
 void _start(void);
 
-void get_pid(const char *path, uint64_t sender);
+void get_tid(const char *path, uint64_t sender);
 
 #endif // NYVD_H

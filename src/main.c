@@ -87,7 +87,7 @@ static bool load_program(const char *path, uint64_t *stage, uint64_t size) {
   return true;
 }
 
-void get_pid(const char *path, uint64_t sender) {
+void get_tid(const char *path, uint64_t sender) {
   for (uint64_t i = 0; i < uprocess_table.size; i++) {
     if (ustrcmp(uprocess_table.processes[i]->path, path) == 0) {
       sys_ipc_send(sender, &uprocess_table.processes[i]->main_thread, sizeof(uint64_t));
@@ -262,16 +262,16 @@ void _start(void) {
     }
 
     ipc_nyvd_query_t *query = (ipc_nyvd_query_t*)msg;
-    
-    if (query->path[0] != '\0') {
+
+    if (query->path[0] == '\0') {
       uint64_t res = 0;
       sys_ipc_send(sender, &res, sizeof(uint64_t));
       continue;
     }
 
     switch (query->func) {
-      case GET_PID:
-        get_pid(query->path, sender);
+      case GET_TID:
+        get_tid(query->path, sender);
         break;
       
       case REGISTER_SERVICE:

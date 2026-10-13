@@ -1,7 +1,7 @@
 #ifndef NYVDQUERY_H
 #define NYVDQUERY_H
 
-#define GET_PID 0
+#define GET_TID 0
 #define REGISTER_SERVICE 1
 #define LOOKUP_SERVICE 2
 
